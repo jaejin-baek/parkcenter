@@ -1,5 +1,6 @@
 package com.apollo.android.cleanarchitecture.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.apollo.android.cleanarchitecture.R
 import com.apollo.android.cleanarchitecture.presentation.model.User
+import com.apollo.android.cleanarchitecture.presentation.second.SecondActivity
+import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+        button.setOnClickListener { startActivity(Intent(this, SecondActivity::class.java)) }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = this.adapter
