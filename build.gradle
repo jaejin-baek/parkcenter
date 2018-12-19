@@ -19,6 +19,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            name "navercorp.release"
+            url "http://repo.navercorp.com/maven2"
+        }
+        maven {
+            name "navercorp.snapshot"
+            url "http://repo.navercorp.com/m2-snapshot-repository/"
+        }
     }
 }
 

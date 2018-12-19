@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.apollo.android.cleanarchitecture">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="com.apollo.android.cleanarchitecture.MyApplication"
         android:allowBackup="true"

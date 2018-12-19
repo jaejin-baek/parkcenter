@@ -1,8 +1,8 @@
 package com.apollo.android.cleanarchitecture.data.source.remote
 
-import com.apollo.android.cleanarchitecture.domain.model.UserEntity
+import com.apollo.android.cleanarchitecture.domain.model.VideoFeedEntity
 import io.reactivex.Observable
 
 interface RemoteUserSource {
-    fun getUsers(): Observable<List<UserEntity>>
+    fun getUsers(): Observable<List<VideoFeedEntity>>
 }

@@ -1,18 +1,18 @@
 package com.apollo.android.cleanarchitecture.data.source.remote
 
-import com.apollo.android.cleanarchitecture.domain.model.UserEntity
+import com.apollo.android.cleanarchitecture.domain.model.VideoFeedEntity
 import io.reactivex.Observable
 
 class RemoteUserSourceImpl:
     RemoteUserSource {
-    override fun getUsers(): Observable<List<UserEntity>> {
+    override fun getUsers(): Observable<List<VideoFeedEntity>> {
         // Mock 연동
 
-        val users = arrayListOf<UserEntity>()
+        val users = arrayListOf<VideoFeedEntity>()
 
-        for(i in 0 .. 100) {
+        for(i in 0 .. 5) {
             users.add(
-                UserEntity(
+                VideoFeedEntity(
                     i.toLong(),
                     "jj-$i"
                 )

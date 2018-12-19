@@ -7,7 +7,7 @@ import com.apollo.android.cleanarchitecture.data.source.remote.RemoteUserSourceI
 import com.apollo.android.cleanarchitecture.domain.interactor.GetUsersUseCase
 import com.apollo.android.cleanarchitecture.domain.repository.UserServiceRepo
 import com.apollo.android.cleanarchitecture.presentation.main.MainViewModel
-import com.apollo.android.cleanarchitecture.presentation.model.mapper.UserEntityMapper
+import com.apollo.android.cleanarchitecture.presentation.model.mapper.VideoFeedEntityMapper
 import org.koin.android.ext.android.startKoin
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -20,7 +20,7 @@ class MyApplication : Application() {
 
     private val domainModule = module {
         single { GetUsersUseCase() }
-        single { UserEntityMapper() }
+        single { VideoFeedEntityMapper() }
     }
 
     private val presentationModule = module {

@@ -8,8 +8,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.apollo.android.cleanarchitecture.R
-import com.apollo.android.cleanarchitecture.presentation.model.User
+import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
@@ -17,8 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by inject()
 
-    private val adapter =
-        MyAdapter()
+    private val adapter = MyAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,39 +37,50 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadData()
     }
 
-    class MyAdapter : ListAdapter<User, MyViewHolder>(
-        DIFF_UTIL
-    ) {
-        private var users: List<User> = arrayListOf()
+    class MyAdapter : ListAdapter<VideoFeed, MyViewHolder>(DIFF_UTIL) {
+        private var videoFeeds: List<VideoFeed> = arrayListOf()
 
         companion object {
-            val DIFF_UTIL = object : ItemCallback<User>() {
-                override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            val DIFF_UTIL = object : ItemCallback<VideoFeed>() {
+                override fun areItemsTheSame(oldItem: VideoFeed, newItem: VideoFeed): Boolean {
                     return oldItem.id == newItem.id
                 }
 
-                override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+                override fun areContentsTheSame(oldItem: VideoFeed, newItem: VideoFeed): Boolean {
                     return oldItem == newItem
                 }
             }
         }
 
-        fun setUsers(users: List<User>) {
-            this.users = users
+        fun setUsers(videoFeeds: List<VideoFeed>) {
+            this.videoFeeds = videoFeeds
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-            return MyViewHolder.create(
-                parent
-            )
+            return MyViewHolder.create(parent)
         }
 
         override fun getItemCount(): Int {
-            return users.size
+            return videoFeeds.size
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.bind(users[position])
+            holder.bind(videoFeeds[position])
+        }
+
+        override fun onViewAttachedToWindow(holder: MyViewHolder) {
+            holder.onViewAttachedToWindow()
+            super.onViewAttachedToWindow(holder)
+        }
+
+        override fun onViewDetachedFromWindow(holder: MyViewHolder) {
+            holder.onViewDetachedFromWindow()
+            super.onViewDetachedFromWindow(holder)
+        }
+
+        override fun onViewRecycled(holder: MyViewHolder) {
+            holder.onViewRecycled()
+            super.onViewRecycled(holder)
         }
     }
 }
