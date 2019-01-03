@@ -1,9 +1,6 @@
 package com.apollo.android.cleanarchitecture.presentation.main
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -12,18 +9,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.apollo.android.cleanarchitecture.R
+import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
 import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
 import com.naver.media.nplayer.NPlayer
 import com.naver.media.nplayer.NPlayerException
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.*
-import java.net.URL
-import android.os.AsyncTask
-import android.view.WindowManager
-import android.widget.FrameLayout
-import android.util.DisplayMetrics
 
 
 class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
@@ -67,26 +62,34 @@ class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(c
         guestUserId.text = videoFeed.id.toString()
         userName.text = videoFeed.name
 
-        bindPlayer(feed)
+        bindPlayer()
     }
 
-    private fun bindPlayer(feed: VideoFeed) {
-        //playerThumbNailView.setImageURI(Uri.parse(feed.imageUrl))
-
-        if (feed.thumb == null) {
-            DownLoadImageTask().execute(feed.imageUrl)
-        } else {
-            playerView.background = BitmapDrawable(feed.thumb)
+    private fun bindPlayer() {
+        if (playerThumbNailView.visibility == View.VISIBLE) {
+            playerThumbNailView.setUrl(videoFeed.imageUrl)
         }
 
-        playerContainer.setOnClickListener {
+//        videoFeed.thumb?.let {
+//            playerThumbNailView
+//        }
+
+//        if (feed.thumb == null) {
+//            DownLoadImageTask().execute(feed.imageUrl)
+//        } else {
+//            playerView.background = BitmapDrawable(feed.thumb)
+//        }
+
+        playerThumbNailView.setOnClickListener {
             Log.e(
                 "@jj",
                 "onClicked! isPlaying : ${playerView.isPlaying}, isPrePared : ${playerView.isPreparing}"
             )
 
             if (!playerView.isPlaying) {
-                playerView.start()
+                //playerView.start()
+
+                VideoOnClickEvent.publish(videoFeed.id, it)
             } else {
                 playerView.pause()
             }
@@ -100,23 +103,32 @@ class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(c
             }
 
             override fun onVideoSizeChanged(width: Int, height: Int, pixelWidthHeightRatio: Float) {
-                Log.d("@jj", "onVideoSizeChanged. width : $width, height : $height")
+                Log.d("@jj", "onVideoSizeChanged. width : $width, height : $height, url : ${videoFeed.id}")
 
                 setVideoViewSize(width, height)
 
-                feed.width = width
-                feed.height = height
+                videoFeed.width = width
+                videoFeed.height = height
+                videoFeed.thumb = playerView.getCurrentFrame(videoFeed.width, videoFeed.height)
             }
 
             override fun onPositionDiscontinuity() {
             }
 
             override fun onPlayerPrepared() {
-                Log.d("@jj", "onPlayerPrepared")
+                Log.d(
+                    "@jj", "isReady : ${playerView.playbackState.isReady}, state : ${playerView.playbackState}, url : ${videoFeed.id}"
+                )
 
-                //playerView.background.setVisible(false, false)
-                playerView.visibility = View.VISIBLE
-                playerThumbNailView.visibility = View.GONE
+//                playerView.background =
+//                        BitmapDrawable(
+//                            playerView.getCurrentFrame(
+//                                videoFeed.width,
+//                                videoFeed.height
+//                            )
+//                        )
+//                playerView.visibility = View.VISIBLE
+//                playerThumbNailView.visibility = View.GONE
             }
 
             override fun onPlayerInfo(what: Int, extras: Bundle?) {
@@ -127,58 +139,26 @@ class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(c
         })
 
         playerView.volume = 0f
-        Log.d("@jj", "isPreparing : ${playerView.isPreparing}")
+        Log.d(
+            "@jj", "isReady : ${playerView.playbackState.isReady}, state : ${playerView.playbackState}"
+        )
 
-        if (playerView.isPreparing) {
+        if (playerView.playbackState.isReady) {
             // do nothing
         } else {
-            playerView.prepare(Uri.parse(feed.url))
+            playerView.prepare(Uri.parse(videoFeed.url))
         }
 
-        playerView.seekTo(feed.currentPosition)
+        playerView.seekTo(videoFeed.currentPosition)
 
         //playerView.playWhenReady = true
     }
 
-    private inner class DownLoadImageTask() :
-        AsyncTask<String, Void, Bitmap>() {
-
-        /*
-            doInBackground(Params... params)
-                Override this method to perform a computation on a background thread.
-         */
-        override fun doInBackground(vararg urls: String): Bitmap? {
-            val urlOfImage = urls[0]
-            var logo: Bitmap? = null
-            try {
-                val `is` = URL(urlOfImage).openStream()
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
-                logo = BitmapFactory.decodeStream(`is`)
-            } catch (e: Exception) { // Catch the download exception
-                e.printStackTrace()
-            }
-
-            return logo
-        }
-
-        /*
-            onPostExecute(Result result)
-                Runs on the UI thread after doInBackground(Params...).
-         */
-        override fun onPostExecute(result: Bitmap) {
-            playerThumbNailView.setImageDrawable(BitmapDrawable(result))
-            //imageView.setImageBitmap(result)
-        }
-    }
-
     fun onViewAttachedToWindow() {
         playerView?.run {
-            Log.d("@jj", "onViewAttachedToWindow isPreparing : $isPreparing")
+            Log.d("@jj", "onViewAttachedToWindow isReady : ${playerView.playbackState.isReady}, url : ${videoFeed.id}")
 
-            if (!isPreparing) {
+            if (!playerView.playbackState.isReady) {
                 prepare(Uri.parse(videoFeed.url))
                 seekTo(videoFeed.currentPosition)
             }

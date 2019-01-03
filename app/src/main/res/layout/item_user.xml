@@ -33,11 +33,10 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <ImageView
+        <com.apollo.android.cleanarchitecture.widget.AsyncImageView
             android:id="@+id/playerThumbNailView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 

@@ -1,17 +1,23 @@
 package com.apollo.android.cleanarchitecture.presentation.main
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.apollo.android.cleanarchitecture.R
+import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
 import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
+import com.apollo.android.cleanarchitecture.util.RxBus
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_user.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +41,17 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.loadData()
+
+        RxBus.listen<VideoOnClickEvent>().subscribe {
+
+            Log.d("@jj", "video clicked!!")
+            val options = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, it.view, "sharedThumb")
+                    .toBundle()
+            } else null
+
+            startActivity(Intent(this, VideoActivity::class.java), options)
+        }
     }
 
     class MyAdapter : ListAdapter<VideoFeed, MyViewHolder>(DIFF_UTIL) {

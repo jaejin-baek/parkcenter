@@ -10,7 +10,7 @@ class RemoteUserSourceImpl:
 
         val users = arrayListOf<VideoFeedEntity>()
 
-        for(i in 0 .. 5) {
+        for(i in 0 .. 19) {
             users.add(
                 VideoFeedEntity(
                     i.toLong(),
