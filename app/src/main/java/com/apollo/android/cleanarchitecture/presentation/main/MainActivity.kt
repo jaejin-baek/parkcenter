@@ -11,13 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.apollo.android.cleanarchitecture.R
 import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
 import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
 import com.apollo.android.cleanarchitecture.util.RxBus
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_user.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
