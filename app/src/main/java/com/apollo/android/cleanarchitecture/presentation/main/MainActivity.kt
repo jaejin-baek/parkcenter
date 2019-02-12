@@ -21,6 +21,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     // lifecycler-Owner
+    // lifecycler-Owner2
 
     private val viewModel: MainViewModel by inject()
 
