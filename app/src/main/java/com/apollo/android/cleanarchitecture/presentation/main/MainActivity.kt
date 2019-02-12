@@ -20,6 +20,12 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
+    // dev1
+    // dev2
+    // dev3
+    // dev4
+    // dev5
+
     // lifecycler-Owner
     // lifecycler-Owner2
     // lifecycler-Owner3
