@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     // lifecycler-Owner
     // lifecycler-Owner2
 
+    // lifecycler- JJ
+
     private val viewModel: MainViewModel by inject()
 
     private val adapter = MyAdapter()
