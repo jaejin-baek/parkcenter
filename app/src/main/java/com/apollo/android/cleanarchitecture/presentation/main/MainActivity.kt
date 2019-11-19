@@ -33,6 +33,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+        init()
+
+        viewModel.loadData()
+
+        // test()
+    }
+
+    private fun init() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = this.adapter
 
@@ -42,14 +50,10 @@ class MainActivity : AppCompatActivity() {
             adapter.setUsers(it)
         })
 
-        viewModel.loadData()
-
         RxBus.listen<VideoOnClickEvent>().subscribe {
-
             Log.d("@jj", "video clicked!!")
             val options = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityOptionsCompat.makeSceneTransitionAnimation(this, it.view, "sharedThumb")
-                    .toBundle()
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, it.view, "sharedThumb").toBundle()
             } else null
 
             startActivity(Intent(this, VideoActivity::class.java), options)
@@ -101,5 +105,9 @@ class MainActivity : AppCompatActivity() {
             holder.onViewRecycled()
             super.onViewRecycled(holder)
         }
+    }
+
+    private fun test() {
+
     }
 }
