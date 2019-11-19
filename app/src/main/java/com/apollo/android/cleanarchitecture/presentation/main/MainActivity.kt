@@ -15,20 +15,18 @@ import com.apollo.android.cleanarchitecture.R
 import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
 import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
 import com.apollo.android.cleanarchitecture.util.RxBus
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    // dev1
-    // dev2
-    // dev3
-    // dev4
-    // dev5
-
     private val viewModel: MainViewModel by inject()
 
     private val adapter = MyAdapter()
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             } else null
 
             startActivity(Intent(this, VideoActivity::class.java), options)
-        }
+        }.addTo(compositeDisposable)
     }
 
     class MyAdapter : ListAdapter<VideoFeed, MyViewHolder>(DIFF_UTIL) {
