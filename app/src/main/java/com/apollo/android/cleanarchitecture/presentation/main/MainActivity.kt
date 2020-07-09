@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
@@ -22,11 +23,14 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
+
     private val viewModel: MainViewModel by inject()
 
     private val adapter = MyAdapter()
 
     private val compositeDisposable = CompositeDisposable()
+
+    private val myCview by lazy { myview }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +42,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadData()
 
         // test()
+
+        myCview.setOnClickListener {
+            myCview.toggle()
+        }
     }
 
     private fun init() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = this.adapter
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.adapter = this.adapter
 
         viewModel.users.observe(this, Observer {
             Log.d("@jj", "Users : $it")
