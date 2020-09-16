@@ -1,16 +1,15 @@
 package com.apollo.android.cleanarchitecture.presentation.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.apollo.android.cleanarchitecture.R
 import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
@@ -32,20 +31,43 @@ class MainActivity : AppCompatActivity() {
 
     private val myCview by lazy { myview }
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+        //setContentView(R.layout.test1)
 
-        init()
+        button.setOnClickListener {
+            myview.toggle(mainContainer, R.id.myview)
 
-        viewModel.loadData()
-
-        // test()
-
-        myCview.setOnClickListener {
-            myCview.toggle()
+//            val set = ConstraintSet()
+//            set.clone(mainContainer)
+//            set.constrainHeight(R.id.myview, 60)
+//            TransitionManager.beginDelayedTransition(mainContainer)
+//            set.applyTo(mainContainer)
         }
+
+//        val constraintSet1 = ConstraintSet()
+//        constraintSet1.clone(constraintLayout)
+
+//        val constraintSet2 = ConstraintSet()
+//        constraintSet2.clone(this, R.layout.test2)
+
+//        var changed = false
+//        testButton.setOnClickListener {
+//
+//            val constraintSet1 = ConstraintSet()
+//            constraintSet1.clone(constraintLayout)
+//
+//            constraintSet1.constrainHeight(R.id.image, 130)
+//
+//            TransitionManager.beginDelayedTransition(constraintLayout)
+//            //val constraint = if (changed) constraintSet1 else constraintSet2
+//            constraintSet1.applyTo(constraintLayout)
+//
+//            changed = !changed
+//        }
     }
 
     private fun init() {
