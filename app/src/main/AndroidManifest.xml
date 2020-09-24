@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.apollo.android.cleanarchitecture.presentation.main.viewer.VideoActivity" />
+        <activity
+            android:name="com.apollo.android.cleanarchitecture.presentation.main.viewer.VideoActivity"
+            android:supportsPictureInPicture="true" />
     </application>
 
 </manifest>

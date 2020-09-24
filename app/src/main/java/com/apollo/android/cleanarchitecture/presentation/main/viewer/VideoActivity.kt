@@ -1,6 +1,12 @@
 package com.apollo.android.cleanarchitecture.presentation.main.viewer
 
+import android.app.PictureInPictureParams
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollo.android.cleanarchitecture.R
@@ -28,7 +34,18 @@ class VideoActivity : AppCompatActivity() {
         recyclerView.adapter = videoAdapter
 
         pipBtn.setOnClickListener {
+            enterPip()
+        }
+    }
 
+    private fun enterPip() {
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val pipParams = PictureInPictureParams.Builder().build()
+
+            enterPictureInPictureMode(pipParams)
+        } else {
+            // not Supported
+            Log.e("@jj", "PIP not supported!!")
         }
     }
 
@@ -36,5 +53,13 @@ class VideoActivity : AppCompatActivity() {
     private fun attachData() {
         // attach RecyclerView
         videoAdapter.submitList(viewModel.getVideoData())
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
+        if (isInPictureInPictureMode) {
+            Toast.makeText(this, "PIP MODE", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "not PIP MODE", Toast.LENGTH_SHORT).show()
+        }
     }
 }
