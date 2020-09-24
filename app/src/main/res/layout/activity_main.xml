@@ -23,7 +23,7 @@
             tools:layout_editor_absoluteX="140dp"
             tools:layout_editor_absoluteY="167dp" />
 
-        <com.apollo.android.cleanarchitecture.presentation.main.LiveInfoView
+        <com.apollo.android.cleanarchitecture.presentation.main.view.LiveInfoView
             android:id="@+id/myview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

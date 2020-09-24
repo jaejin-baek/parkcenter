@@ -1,4 +1,4 @@
-package com.apollo.android.cleanarchitecture.presentation.main
+package com.apollo.android.cleanarchitecture.presentation.main.viewer
 
 import android.graphics.drawable.Drawable
 import android.os.Build

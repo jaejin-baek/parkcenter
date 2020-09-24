@@ -1,4 +1,4 @@
-package com.apollo.android.cleanarchitecture.presentation.main
+package com.apollo.android.cleanarchitecture.presentation.main.view
 
 import android.content.Context
 import android.util.AttributeSet

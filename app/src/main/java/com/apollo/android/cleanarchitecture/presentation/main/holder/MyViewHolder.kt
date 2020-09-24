@@ -1,4 +1,4 @@
-package com.apollo.android.cleanarchitecture.presentation.main
+package com.apollo.android.cleanarchitecture.presentation.main.holder
 
 import android.content.Context
 import android.graphics.Point

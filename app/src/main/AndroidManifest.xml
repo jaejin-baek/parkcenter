@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.main.VideoActivity" />
+        <activity android:name=".presentation.main.viewer.VideoActivity" />
     </application>
 
 </manifest>

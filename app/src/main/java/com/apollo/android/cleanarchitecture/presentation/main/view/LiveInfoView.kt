@@ -1,4 +1,4 @@
-package com.apollo.android.cleanarchitecture.presentation.main
+package com.apollo.android.cleanarchitecture.presentation.main.view
 
 import android.annotation.SuppressLint
 import android.content.Context
