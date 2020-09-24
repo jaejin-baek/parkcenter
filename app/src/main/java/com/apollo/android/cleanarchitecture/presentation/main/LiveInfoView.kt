@@ -7,9 +7,11 @@ import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.apollo.android.cleanarchitecture.R
 import kotlinx.android.synthetic.main.layout_live_info.view.*
 
@@ -59,7 +61,7 @@ class LiveInfoView @JvmOverloads constructor(
         Log.e("@jj", "expand")
         val set = ConstraintSet()
         set.clone(containerView)
-        set.constrainHeight(viewId, oriHeight)
+        set.constrainHeight(viewId, ViewGroup.LayoutParams.WRAP_CONTENT)
         TransitionManager.beginDelayedTransition(containerView)
         set.applyTo(containerView)
 
