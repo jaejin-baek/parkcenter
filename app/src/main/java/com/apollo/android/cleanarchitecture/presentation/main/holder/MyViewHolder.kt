@@ -14,15 +14,14 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.apollo.android.cleanarchitecture.R
 import com.apollo.android.cleanarchitecture.event.VideoOnClickEvent
-import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
+import com.apollo.android.cleanarchitecture.presentation.main.viewer.data.VideoFeed
 import com.naver.media.nplayer.NPlayer
 import com.naver.media.nplayer.NPlayerException
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.*
 
 
-class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-    LayoutContainer {
+class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     private lateinit var videoFeed: VideoFeed
 

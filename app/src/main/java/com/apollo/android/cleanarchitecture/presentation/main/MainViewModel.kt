@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.apollo.android.cleanarchitecture.domain.interactor.GetUsersUseCase
-import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
+import com.apollo.android.cleanarchitecture.presentation.main.viewer.data.VideoFeed
 import com.apollo.android.cleanarchitecture.presentation.model.mapper.VideoFeedEntityMapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

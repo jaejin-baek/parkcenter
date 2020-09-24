@@ -2,7 +2,7 @@ package com.apollo.android.cleanarchitecture.presentation.model.mapper
 
 import com.apollo.android.cleanarchitecture.domain.model.VideoFeedEntity
 import com.apollo.android.cleanarchitecture.domain.model.mapper.Mapper
-import com.apollo.android.cleanarchitecture.presentation.model.VideoFeed
+import com.apollo.android.cleanarchitecture.presentation.main.viewer.data.VideoFeed
 
 class VideoFeedEntityMapper :
     Mapper<VideoFeedEntity, VideoFeed> {

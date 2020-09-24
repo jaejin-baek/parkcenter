@@ -1,49 +1,40 @@
 package com.apollo.android.cleanarchitecture.presentation.main.viewer
 
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollo.android.cleanarchitecture.R
-import com.apollo.android.cleanarchitecture.util.THUMBNAIL_URL
-import com.apollo.android.cleanarchitecture.widget.AsyncImageView
 import kotlinx.android.synthetic.main.activity_video.*
 
 class VideoActivity : AppCompatActivity() {
+
+    private val videoAdapter = VideoAdapter()
+
+    private val viewModel = VideoViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d("@jj", "VideoActivity::onCreate")
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Log.d("@jj", "VideoActivity::postpone")
-            postponeEnterTransition()
-        } else {
-            supportPostponeEnterTransition()
-        }
 
         setContentView(R.layout.activity_video)
 
         initView()
+
+        attachData()
     }
 
     private fun initView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fVideoThumbNailView.transitionName = "sharedThumb"
-        }
-        fVideoThumbNailView.setUrl(THUMBNAIL_URL)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = videoAdapter
 
-        // after load
-        fVideoThumbNailView.onLoadCompleteListener =
-                object : AsyncImageView.OnLoadCompleteListener {
-                    override fun onComplete(drawable: Drawable) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            startPostponedEnterTransition()
-                        } else {
-                            supportStartPostponedEnterTransition()
-                        }
-                    }
-                }
+        pipBtn.setOnClickListener {
+
+        }
+    }
+
+
+    private fun attachData() {
+        // attach RecyclerView
+        videoAdapter.submitList(viewModel.getVideoData())
     }
 }
