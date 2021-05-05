@@ -1,15 +1,21 @@
 package com.apollo.android.cleanarchitecture.presentation.main.viewer
 
 import android.app.PictureInPictureParams
+import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollo.android.cleanarchitecture.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_video.*
 
 class VideoActivity : AppCompatActivity() {
@@ -28,14 +34,36 @@ class VideoActivity : AppCompatActivity() {
         attachData()
     }
 
+    private val imageURL = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDA4MzBfNzcg%2FMDAxNTk4NzUwMTEzOTc0.ynHXXcBBH3HkmIYuslyzwI9wPgjAAariLcS_JxJldRMg.FdJKhkJtzEwGWL99zXUVginhbKIPMGLlxWuQG3Dr6wMg.PNG.minizzoa%2Fmobile_184744617136.png&type=l340_165"
+
     private fun initView() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = videoAdapter
 
         pipBtn.setOnClickListener {
-            enterPip()
+            startActivity(Intent(this, TestActivity::class.java))
+            finish()
+
+            //enterPip()
         }
+
+        Glide.with(this)
+                .asBitmap()
+                .load(imageURL)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        Log.e("@jj", "onResourceReady")
+
+                        val bitmap = Bitmap.createBitmap(resource, 0, 0, resource.width/2, resource.height/2)
+                        resource.recycle()        // Caution!!!
+                        myBitmap.setImageBitmap(bitmap)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        Log.e("@jj", "onLoadCleared")
+                    }
+                })
     }
 
     private fun enterPip() {
